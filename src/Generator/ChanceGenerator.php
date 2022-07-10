@@ -1,14 +1,15 @@
 <?php
 
-namespace Faker\Core;
+namespace Faker\Core\Generator;
 
+use Faker\Core\DefaultGenerator;
 use Faker\Core\Extension\Extension;
 
 /**
  * This generator returns a default value for all called properties
- * and methods. It works with Faker\Generator::optional().
+ * and methods. It works with Faker\DefaultGenerator::optional().
  *
- * @mixin Generator
+ * @mixin DefaultGenerator
  */
 class ChanceGenerator
 {
@@ -17,7 +18,7 @@ class ChanceGenerator
     protected $default;
 
     /**
-     * @param Extension|Generator $generator
+     * @param Extension|DefaultGenerator $generator
      */
     public function __construct($generator, float $weight, $default = null)
     {

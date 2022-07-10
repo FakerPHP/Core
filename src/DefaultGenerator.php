@@ -13,8 +13,10 @@ use Faker\Core\Extension\ExtensionNotFound;
 use Faker\Core\Extension\FileExtension;
 use Faker\Core\Extension\GeneratorAwareExtension;
 use Faker\Core\Extension\NumberExtension;
-use Faker\Core\Extension\UuidExtension;
 use Faker\Core\Extension\VersionExtension;
+use Faker\Core\Generator\ChanceGenerator;
+use Faker\Core\Generator\UniqueGenerator;
+use Faker\Core\Generator\ValidGenerator;
 
 /**
  * @mixin BarcodeExtension
@@ -24,9 +26,8 @@ use Faker\Core\Extension\VersionExtension;
  * @mixin FileExtension
  * @mixin NumberExtension
  * @mixin VersionExtension
- * @mixin UuidExtension
  */
-class Generator
+class DefaultGenerator
 {
     protected array $formatters = [];
 
@@ -38,13 +39,12 @@ class Generator
     }
 
     /**
-     * @template T of Extension\Extension
+     * @template T of \Faker\Core\Extension\Extension
      *
      * @param class-string<T> $id
      *
      * @return T
      * @throws ExtensionNotFound
-     *
      */
     public function ext(string $id): Extension
     {
@@ -74,17 +74,17 @@ class Generator
      * </code>
      *
      * @param bool $reset If set to true, resets the list of existing values
-     * @param int $maxRetries Maximum number of retries to find a unique value,
+     * @param int $retries Maximum number of retries to find a unique value,
      *                         After which an OverflowException is thrown.
      *
      * @return self A proxy class returning only non-existing values
      * @throws \OverflowException When no unique value can be found by iterating $maxRetries times
      *
      */
-    public function unique($reset = false, $maxRetries = 10000)
+    public function unique(bool $reset = false, int $retries = 10000)
     {
         if ($reset || $this->uniqueGenerator === null) {
-            $this->uniqueGenerator = new UniqueGenerator($this, $maxRetries);
+            $this->uniqueGenerator = new UniqueGenerator($this, $retries);
         }
 
         return $this->uniqueGenerator;
@@ -117,7 +117,7 @@ class Generator
      *   $values []= $faker->valid($evenValidator)->randomDigit;
      * }
      * print_r($values); // [0, 4, 8, 4, 2, 6, 0, 8, 8, 6]
-     * </code>
+     * </code>a
      *
      * @param ?\Closure $validator A function returning true for valid values
      * @param int $maxRetries Maximum number of retries to find a valid value,
@@ -151,7 +151,7 @@ class Generator
      *
      * @return callable
      */
-    public function getFormatter($format): callable
+    public function getFormatter(string $format): callable
     {
         if (isset($this->formatters[$format])) {
             return $this->formatters[$format];
@@ -180,7 +180,7 @@ class Generator
      *
      * @return string
      */
-    public function parse($string)
+    public function parse(string $string): string
     {
         $callback = function ($matches) {
             return $this->format($matches[1]);
@@ -189,4 +189,18 @@ class Generator
         return preg_replace_callback('/{{\s?(\w+|[\w\\\]+->\w+?)\s?}}/u', $callback, $string);
     }
 
+    public function __call(string $name, array $arguments)
+    {
+        return $this->format($name, $arguments);
+    }
+
+    public function __destruct()
+    {
+        $this->seed();
+    }
+
+    public function __wakeup(): void
+    {
+        $this->formatters = [];
+    }
 }

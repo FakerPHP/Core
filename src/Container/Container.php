@@ -14,17 +14,20 @@ use Faker\Core\Extension\Extension;
 final class Container implements ContainerInterface
 {
     /**
-     * @var array<string, callable|object|string>
+     * @var array<string, callable(): Extension|Extension|class-string<Extension>>
      */
-    private $definitions;
+    private array $definitions;
 
-    private $services = [];
+    /**
+     * @var array<string, mixed>
+     */
+    private array $services = [];
 
     /**
      * Create a container object with a set of definitions. The array value MUST
      * produce an object that implements Extension.
      *
-     * @param array<string, callable|object|string> $definitions
+     * @param array<string, callable(): Extension|Extension|class-string<Extension>> $definitions
      */
     public function __construct(array $definitions)
     {
@@ -41,15 +44,8 @@ final class Container implements ContainerInterface
      * @throws ContainerException
      * @throws NotInContainerException
      */
-    public function get($id): Extension
+    public function get(string $id): Extension
     {
-        if (!is_string($id)) {
-            throw new \InvalidArgumentException(sprintf(
-                'First argument of %s::get() must be string',
-                self::class
-            ));
-        }
-
         if (array_key_exists($id, $this->services)) {
             return $this->services[$id];
         }
@@ -79,9 +75,13 @@ final class Container implements ContainerInterface
     /**
      * Get the service from a definition.
      *
-     * @param callable|object|string $definition
+     * @template T of \Faker\Core\Extension\Extension
+     *
+     * @param callable(): T|T|class-string<T> $definition
+     *
+     * @return T
      */
-    private function getService($id, $definition)
+    private function getService(string $id, callable|object|string $definition): object
     {
         if (is_callable($definition)) {
             try {
@@ -121,22 +121,17 @@ final class Container implements ContainerInterface
      *
      * @param string $id
      *
-     * @throws \InvalidArgumentException
+     * @return bool
      */
-    public function has($id): bool
+    public function has(string $id): bool
     {
-        if (!is_string($id)) {
-            throw new \InvalidArgumentException(sprintf(
-                'First argument of %s::get() must be string',
-                self::class
-            ));
-        }
-
         return array_key_exists($id, $this->definitions);
     }
 
     /**
      * Get the bindings between Extension interfaces and implementations.
+     *
+     * @return array<string, callable(): Extension|Extension|class-string<Extension>>
      */
     public function getDefinitions(): array
     {

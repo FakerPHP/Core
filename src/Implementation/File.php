@@ -14,11 +14,11 @@ final class File implements FileExtension
     /**
      * MIME types from the apache.org file. Some types are truncated.
      *
-     * @var array Map of MIME types => file extension(s)
+     * @var array<string, string|array<int, string>> Map of MIME types => file extension(s)
      *
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
      */
-    private $mimeTypes = [
+    private array $mimeTypes = [
         'application/atom+xml' => 'atom',
         'application/ecmascript' => 'ecma',
         'application/emma+xml' => 'emma',

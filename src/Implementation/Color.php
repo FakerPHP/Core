@@ -15,7 +15,7 @@ final class Color implements ColorExtension
     /**
      * @var string[]
      */
-    private $safeColorNames = [
+    private array $safeColorNames = [
         'black', 'maroon', 'green', 'navy', 'olive',
         'purple', 'teal', 'lime', 'blue', 'silver',
         'gray', 'yellow', 'fuchsia', 'aqua', 'white',
@@ -24,7 +24,7 @@ final class Color implements ColorExtension
     /**
      * @var string[]
      */
-    private $allColorNames = [
+    private array $allColorNames = [
         'AliceBlue', 'AntiqueWhite', 'Aqua', 'Aquamarine',
         'Azure', 'Beige', 'Bisque', 'Black', 'BlanchedAlmond',
         'Blue', 'BlueViolet', 'Brown', 'BurlyWood', 'CadetBlue',
@@ -83,18 +83,18 @@ final class Color implements ColorExtension
     }
 
     /**
+     * @return int[]
      * @example 'array(0,255,122)'
      *
-     * @return int[]
      */
     public function rgbColorAsArray(): array
     {
         $color = $this->hexColor();
 
         return [
-            hexdec(substr($color, 1, 2)),
-            hexdec(substr($color, 3, 2)),
-            hexdec(substr($color, 5, 2)),
+            (int)hexdec(substr($color, 1, 2)),
+            (int)hexdec(substr($color, 3, 2)),
+            (int)hexdec(substr($color, 5, 2)),
         ];
     }
 
@@ -163,9 +163,9 @@ final class Color implements ColorExtension
     }
 
     /**
+     * @return int[]
      * @example array(340, 50, 20)
      *
-     * @return int[]
      */
     public function hslColorAsArray(): array
     {

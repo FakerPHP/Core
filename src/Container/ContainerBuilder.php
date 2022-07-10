@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Faker\Core\Container;
 
+use Faker\Core\Extension\Extension;
 use Faker\Core\Implementation;
 use Faker\Core\Extension\BarcodeExtension;
 use Faker\Core\Extension\BloodExtension;
@@ -11,7 +12,6 @@ use Faker\Core\Extension\ColorExtension;
 use Faker\Core\Extension\DateTimeExtension;
 use Faker\Core\Extension\FileExtension;
 use Faker\Core\Extension\NumberExtension;
-use Faker\Core\Extension\UuidExtension;
 use Faker\Core\Extension\VersionExtension;
 
 /**
@@ -20,24 +20,17 @@ use Faker\Core\Extension\VersionExtension;
 final class ContainerBuilder
 {
     /**
-     * @var array<string, callable|object|string>
+     * @var array<string, callable|object|class-string>
      */
-    private $definitions = [];
+    private array $definitions = [];
 
     /**
-     * @param callable|object|string $value
+     * @param callable|object|class-string $value
      *
      * @throws \InvalidArgumentException
      */
-    public function add($value, string $name = null): self
+    public function add(callable|object|string $value, string $name = null): self
     {
-        if (!is_string($value) && !is_callable($value) && !is_object($value)) {
-            throw new \InvalidArgumentException(sprintf(
-                'First argument to "%s::add()" must be a string, callable or object.',
-                self::class
-            ));
-        }
-
         if ($name === null) {
             if (is_string($value)) {
                 $name = $value;
@@ -64,6 +57,8 @@ final class ContainerBuilder
     /**
      * Get an array with extension that represent the default English
      * functionality.
+     *
+     * @return array<class-string<Extension>, class-string<Extension>>
      */
     public static function defaultExtensions(): array
     {
@@ -75,7 +70,6 @@ final class ContainerBuilder
             FileExtension::class => Implementation\File::class,
             NumberExtension::class => Implementation\Number::class,
             VersionExtension::class => Implementation\Version::class,
-            UuidExtension::class => Implementation\Uuid::class,
         ];
     }
 

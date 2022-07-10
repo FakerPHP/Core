@@ -8,6 +8,8 @@ interface ContainerInterface extends BaseContainerInterface
 {
     /**
      * Get the bindings between Extension interfaces and implementations.
+     *
+     * @return array<class-string, class-string>
      */
     public function getDefinitions(): array;
 }

@@ -1,27 +1,28 @@
 <?php
 
-namespace Faker\Core;
+namespace Faker\Core\Generator;
 
+use Faker\Core\DefaultGenerator;
 use Faker\Core\Extension\Extension;
 
 /**
  * Proxy for other generators, to return only valid values. Works with
- * Faker\Generator\Base->valid()
+ * Faker\DefaultGenerator\Base->valid()
  *
- * @mixin Generator
+ * @mixin DefaultGenerator
  */
 class ValidGenerator
 {
     protected $generator;
     protected $validator;
-    protected $maxRetries;
+    protected $retries;
 
     /**
-     * @param Extension|Generator $generator
-     * @param callable|null       $validator
-     * @param int                 $maxRetries
+     * @param Extension|DefaultGenerator $generator
+     * @param callable|null $validator
+     * @param int $retries
      */
-    public function __construct($generator, $validator = null, $maxRetries = 10000)
+    public function __construct($generator, ?callable $validator = null, int $retries = 10000)
     {
         if (null === $validator) {
             $validator = static function () {
@@ -32,19 +33,19 @@ class ValidGenerator
         }
         $this->generator = $generator;
         $this->validator = $validator;
-        $this->maxRetries = $maxRetries;
+        $this->retries = $retries;
     }
 
     public function ext(string $id)
     {
-        return new self($this->generator->ext($id), $this->validator, $this->maxRetries);
+        return new self($this->generator->ext($id), $this->validator, $this->retries);
     }
 
     /**
      * Catch and proxy all generator calls with arguments but return only valid values
      *
      * @param string $name
-     * @param array  $arguments
+     * @param array $arguments
      */
     public function __call($name, $arguments)
     {
@@ -54,8 +55,8 @@ class ValidGenerator
             $res = call_user_func_array([$this->generator, $name], $arguments);
             ++$i;
 
-            if ($i > $this->maxRetries) {
-                throw new \OverflowException(sprintf('Maximum retries of %d reached without finding a valid value', $this->maxRetries));
+            if ($i > $this->retries) {
+                throw new \OverflowException(sprintf('Maximum retries of %d reached without finding a valid value', $this->retries));
             }
         } while (!call_user_func($this->validator, $res));
 

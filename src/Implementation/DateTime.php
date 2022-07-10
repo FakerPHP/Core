@@ -19,31 +19,28 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
     /**
      * @var string[]
      */
-    private $centuries = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI'];
+    private array $centuries = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI'];
 
-    /**
-     * @var string
-     */
-    private $defaultTimezone = null;
+    private ?string $defaultTimezone = null;
 
     /**
      * Get the POSIX-timestamp of a DateTime, int or string.
      *
      * @param \DateTime|float|int|string $until
      *
-     * @return false|int
+     * @return int
      */
-    protected function getTimestamp($until = 'now')
+    protected function getTimestamp(\DateTime|float|int|string $until = 'now'): int
     {
         if (is_numeric($until)) {
-            return (int) $until;
+            return (int)$until;
         }
 
         if ($until instanceof \DateTime) {
             return $until->getTimestamp();
         }
 
-        return strtotime(empty($until) ? 'now' : $until);
+        return (int)strtotime(empty($until) ? 'now' : $until);
     }
 
     /**

@@ -11,8 +11,10 @@ final class Helper
 {
     /**
      * Returns a random element from a passed array.
+     *
+     * @param array<int|string, mixed> $array
      */
-    public static function randomElement(array $array)
+    public static function randomElement(array $array): mixed
     {
         if ($array === []) {
             return null;

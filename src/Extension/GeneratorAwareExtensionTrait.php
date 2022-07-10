@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Faker\Core\Extension;
 
 
-use Faker\Core\Generator;
+use Faker\Core\DefaultGenerator;
 
 /**
  * A helper trait to be used with GeneratorAwareExtension.
@@ -13,14 +13,14 @@ use Faker\Core\Generator;
 trait GeneratorAwareExtensionTrait
 {
     /**
-     * @var Generator|null
+     * @var DefaultGenerator
      */
     private $generator;
 
     /**
      * @return static
      */
-    public function withGenerator(Generator $generator): Extension
+    public function withGenerator(DefaultGenerator $generator): Extension
     {
         $instance = clone $this;
 

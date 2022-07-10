@@ -15,17 +15,23 @@ class Iban
         $checkString = substr($iban, 4) . substr($iban, 0, 2) . '00';
 
         // Replace all letters with their number equivalents
-        $checkString = preg_replace_callback('/[A-Z]/', ['self', 'alphaToNumberCallback'], $checkString);
+        $checkString = preg_replace_callback('/[A-Z]/', fn (array $a) => self::alphaToNumberCallback($a), $checkString);
 
         // Perform mod 97 and subtract from 98
         $checksum = 98 - self::mod97($checkString);
 
-        return str_pad((string) $checksum, 2, '0', STR_PAD_LEFT);
+        return str_pad((string)$checksum, 2, '0', STR_PAD_LEFT);
     }
 
-    private static function alphaToNumberCallback(array $match): int
+    /**
+     * Convert a letter to a number.
+     *
+     * @param array<int|string, string> $match
+     * @return string
+     */
+    private static function alphaToNumberCallback(array $match): string
     {
-        return self::alphaToNumber($match[0]);
+        return (string)self::alphaToNumber($match[0]);
     }
 
     /**
@@ -43,10 +49,10 @@ class Iban
      */
     public static function mod97(string $number): int
     {
-        $checksum = (int) $number[0];
+        $checksum = (int)$number[0];
 
         for ($i = 1, $size = strlen($number); $i < $size; ++$i) {
-            $checksum = (10 * $checksum + (int) $number[$i]) % 97;
+            $checksum = (10 * $checksum + (int)$number[$i]) % 97;
         }
 
         return $checksum;
