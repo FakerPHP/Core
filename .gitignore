@@ -1,1 +1,4 @@
+/.build
+/vendor
+/vendor-bin
 /composer.lock
