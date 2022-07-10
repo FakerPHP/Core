@@ -10,8 +10,20 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "bram",
-      "email": "email@example.com"
+      "name": "Pim Jansen",
+      "homepage": "https://github.com/pimjansen"
+    },
+    {
+      "name": "Bram Ceulemans",
+      "homepage": "https://github.com/bram-pkg"
+    },
+    {
+      "name": "Graham Campbell",
+      "homepage": "https://github.com/GrahamCampbell"
+    },
+    {
+      "name": "Tobias Nyholm",
+      "homepage": "https://github.com/nyholm"
     }
   ],
   "require": {
