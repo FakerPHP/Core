@@ -17,6 +17,8 @@ use Faker\Core\Extension\VersionExtension;
 use Faker\Core\Generator\ChanceGenerator;
 use Faker\Core\Generator\UniqueGenerator;
 use Faker\Core\Generator\ValidGenerator;
+use Faker\Core\Strategy\SimpleStrategy;
+use Faker\Core\Strategy\StrategyInterface;
 
 /**
  * @mixin BarcodeExtension
@@ -32,10 +34,13 @@ class DefaultGenerator
     protected array $formatters = [];
 
     private ContainerInterface $container;
+    private StrategyInterface $strategy;
 
-    public function __construct(ContainerInterface $container = null)
+    public function __construct(ContainerInterface $container = null, StrategyInterface $strategy = null)
     {
         $this->container = $container ?: ContainerBuilder::getDefault();
+
+        $this->strategy = $strategy ?: new SimpleStrategy();
     }
 
     /**
@@ -191,7 +196,7 @@ class DefaultGenerator
 
     public function __call(string $name, array $arguments)
     {
-        return $this->format($name, $arguments);
+        return $this->strategy->generate($name, fn () => $this->format($name, $arguments));
     }
 
     public function __destruct()
