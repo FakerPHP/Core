@@ -24,6 +24,27 @@ final class Helper
     }
 
     /**
+     * Return a boolean, true or false.
+     *
+     * @param int $chanceOfGettingTrue Between 0 (always get false) and 100 (always get true)
+     */
+    public static function boolean(int $chanceOfGettingTrue = 50): bool
+    {
+        return self::numberBetween(1, 100) <= $chanceOfGettingTrue;
+    }
+
+    /**
+     * Returns a random number between start and end
+     */
+    public static function numberBetween(int $start = 0, int $end = 2147483647): int
+    {
+        $min = min($start, $end);
+        $max = max($start, $end);
+
+        return random_int($min, $max);
+    }
+
+    /**
      * Replaces all hash sign ('#') occurrences with a random number
      * Replaces all percentage sign ('%') occurrences with a non-zero number.
      *
