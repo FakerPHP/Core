@@ -36,6 +36,8 @@ class DefaultGenerator
     private ContainerInterface $container;
     private StrategyInterface $strategy;
 
+    private UniqueGenerator|null $uniqueGenerator = null;
+
     public function __construct(ContainerInterface $container = null, StrategyInterface $strategy = null)
     {
         $this->container = $container ?: ContainerBuilder::getDefault();
@@ -84,11 +86,10 @@ class DefaultGenerator
      *
      * @return self A proxy class returning only non-existing values
      * @throws \OverflowException When no unique value can be found by iterating $maxRetries times
-     *
      */
     public function unique(bool $reset = false, int $retries = 10000)
     {
-        if ($reset || $this->uniqueGenerator === null) {
+        if ($reset || is_null($this->uniqueGenerator)) {
             $this->uniqueGenerator = new UniqueGenerator($this, $retries);
         }
 
@@ -196,7 +197,7 @@ class DefaultGenerator
 
     public function __call(string $name, array $arguments)
     {
-        return $this->strategy->generate($name, fn () => $this->format($name, $arguments));
+        return $this->strategy->generate($name, fn() => $this->format($name, $arguments));
     }
 
     public function __destruct()
