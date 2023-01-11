@@ -20,7 +20,7 @@ class UniqueStrategy implements StrategyInterface
     public function generate(string $name, callable $callback)
     {
         if (!isset($this->previous[$name])) {
-            $this->previous = [];
+            $this->previous[$name] = [];
         }
 
         $tries = 0;

@@ -17,8 +17,10 @@ use Faker\Core\Extension\VersionExtension;
 use Faker\Core\Generator\ChanceGenerator;
 use Faker\Core\Generator\UniqueGenerator;
 use Faker\Core\Generator\ValidGenerator;
+use Faker\Core\Strategy\ChanceStrategy;
 use Faker\Core\Strategy\SimpleStrategy;
 use Faker\Core\Strategy\StrategyInterface;
+use Faker\Core\Strategy\UniqueStrategy;
 
 /**
  * @mixin BarcodeExtension
@@ -87,13 +89,13 @@ class DefaultGenerator
      * @return self A proxy class returning only non-existing values
      * @throws \OverflowException When no unique value can be found by iterating $maxRetries times
      */
-    public function unique(bool $reset = false, int $retries = 10000)
+    public function unique(bool $reset = false, int $retries = 10000): self
     {
-        if ($reset || is_null($this->uniqueGenerator)) {
-            $this->uniqueGenerator = new UniqueGenerator($this, $retries);
+        if ($reset) {
+            $this->strategy = new UniqueStrategy($retries);
         }
 
-        return $this->uniqueGenerator;
+        return $this;
     }
 
     /**
@@ -103,9 +105,11 @@ class DefaultGenerator
      *
      * @return self
      */
-    public function optional(float $weight = 0.5, $default = null)
+    public function optional(float $weight = 0.5, $default = null): self
     {
-        return new ChanceGenerator($this, $weight, $default);
+        $this->strategy = new ChanceStrategy($weight, $default);
+
+        return $this;
     }
 
     /**
