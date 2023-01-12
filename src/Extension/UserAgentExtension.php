@@ -38,22 +38,22 @@ interface UserAgentExtension extends Extension
     public function opera(): string;
 
     /**
-     * @example Windows NT 6.0
+     * @example 'Windows NT 6.0'
      */
     public function windowsPlatformToken(): string;
 
     /**
-     * @example Macintosh; PPC Mac OS X 10_6_0
+     * @example 'Macintosh; PPC Mac OS X 10_6_0'
      */
     public function macPlatformToken(): string;
 
     /**
-     * @example iPhone; CPU iPhone OS 13_0 like Mac OS X
+     * @example 'iPhone; CPU iPhone OS 13_0 like Mac OS X'
      */
     public function iosMobileToken(): string;
 
     /**
-     * @example X11; Linux i686
+     * @example 'X11; Linux i686'
      */
     public function linuxPlatformToken(): string;
 }
