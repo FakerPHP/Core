@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Faker\Core\Container;
 
 use Faker\Core\Extension\Extension;
+use Faker\Core\Extension\LanguageExtension;
 use Faker\Core\Implementation;
 use Faker\Core\Extension\BarcodeExtension;
 use Faker\Core\Extension\BloodExtension;
@@ -68,6 +69,7 @@ final class ContainerBuilder
             ColorExtension::class => Implementation\Color::class,
             DateTimeExtension::class => Implementation\DateTime::class,
             FileExtension::class => Implementation\File::class,
+            LanguageExtension::class => Implementation\Language::class,
             NumberExtension::class => Implementation\Number::class,
             VersionExtension::class => Implementation\Version::class,
         ];
