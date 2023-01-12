@@ -48,7 +48,7 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
      *
      * @param int $timestamp the UNIX / POSIX-compatible timestamp
      */
-    protected function getTimestampDateTime(int $timestamp): \DateTime
+    protected function getTimestampDateTime(int $timestamp): \DateTimeInterface
     {
         return new \DateTime('@' . $timestamp);
     }
@@ -75,14 +75,14 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
     /**
      * Internal method to set the timezone on a DateTime object.
      */
-    protected function setTimezone(\DateTime $dateTime, ?string $timezone): \DateTime
+    protected function setTimezone(\DateTime $dateTime, ?string $timezone): \DateTimeInterface
     {
         $timezone = $this->resolveTimezone($timezone);
 
         return $dateTime->setTimezone(new \DateTimeZone($timezone));
     }
 
-    public function dateTime($until = 'now', string $timezone = null): \DateTime
+    public function dateTime($until = 'now', string $timezone = null): \DateTimeInterface
     {
         return $this->setTimezone(
             $this->getTimestampDateTime($this->unixTime($until)),
@@ -90,7 +90,7 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
         );
     }
 
-    public function dateTimeAD($until = 'now', string $timezone = null): \DateTime
+    public function dateTimeAD($until = 'now', string $timezone = null): \DateTimeInterface
     {
         $min = (PHP_INT_SIZE > 4) ? -62135597361 : -PHP_INT_MAX;
 
@@ -117,8 +117,11 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
         );
     }
 
-    public function dateTimeInInterval($from = '-30 years', string $interval = '+5 days', string $timezone = null): \DateTime
-    {
+    public function dateTimeInInterval(
+        $from = '-30 years',
+        string $interval = '+5 days',
+        string $timezone = null
+    ): \DateTimeInterface {
         $intervalObject = \DateInterval::createFromDateString($interval);
         $datetime = $from instanceof \DateTime ? $from : new \DateTime($from);
 
@@ -130,29 +133,29 @@ final class DateTime implements DateTimeExtension, GeneratorAwareExtension
         return $this->dateTimeBetween($begin, $end, $timezone);
     }
 
-    public function dateTimeThisWeek($until = 'sunday this week', string $timezone = null): \DateTime
+    public function dateTimeThisWeek($until = 'sunday this week', string $timezone = null): \DateTimeInterface
     {
         return $this->dateTimeBetween('monday this week', $until, $timezone);
     }
 
-    public function dateTimeThisMonth($until = 'last day of this month', string $timezone = null): \DateTime
+    public function dateTimeThisMonth($until = 'last day of this month', string $timezone = null): \DateTimeInterface
     {
         return $this->dateTimeBetween('first day of this month', $until, $timezone);
     }
 
-    public function dateTimeThisYear($until = 'last day of december', string $timezone = null): \DateTime
+    public function dateTimeThisYear($until = 'last day of december', string $timezone = null): \DateTimeInterface
     {
         return $this->dateTimeBetween('first day of january', $until, $timezone);
     }
 
-    public function dateTimeThisDecade($until = 'now', string $timezone = null): \DateTime
+    public function dateTimeThisDecade($until = 'now', string $timezone = null): \DateTimeInterface
     {
         $year = floor(date('Y') / 10) * 10;
 
         return $this->dateTimeBetween("first day of january $year", $until, $timezone);
     }
 
-    public function dateTimeThisCentury($until = 'now', string $timezone = null): \DateTime
+    public function dateTimeThisCentury($until = 'now', string $timezone = null): \DateTimeInterface
     {
         $year = floor(date('Y') / 100) * 100;
 
