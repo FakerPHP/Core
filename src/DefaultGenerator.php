@@ -12,6 +12,7 @@ use Faker\Core\Extension\Extension;
 use Faker\Core\Extension\ExtensionNotFound;
 use Faker\Core\Extension\FileExtension;
 use Faker\Core\Extension\GeneratorAwareExtension;
+use Faker\Core\Extension\LoremExtension;
 use Faker\Core\Extension\NumberExtension;
 use Faker\Core\Extension\VersionExtension;
 use Faker\Core\Generator\ChanceGenerator;
@@ -28,6 +29,7 @@ use Faker\Core\Strategy\StrategyInterface;
  * @mixin FileExtension
  * @mixin NumberExtension
  * @mixin VersionExtension
+ * @mixin LoremExtension
  */
 class DefaultGenerator
 {
