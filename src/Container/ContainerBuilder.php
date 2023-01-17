@@ -10,6 +10,7 @@ use Faker\Core\Implementation;
 use Faker\Core\Extension\BarcodeExtension;
 use Faker\Core\Extension\BloodExtension;
 use Faker\Core\Extension\ColorExtension;
+use Faker\Core\Extension\CountryExtension;
 use Faker\Core\Extension\DateTimeExtension;
 use Faker\Core\Extension\FileExtension;
 use Faker\Core\Extension\NumberExtension;
@@ -67,6 +68,7 @@ final class ContainerBuilder
             BarcodeExtension::class => Implementation\Barcode::class,
             BloodExtension::class => Implementation\Blood::class,
             ColorExtension::class => Implementation\Color::class,
+            CountryExtension::class => Implementation\Country::class,
             DateTimeExtension::class => Implementation\DateTime::class,
             FileExtension::class => Implementation\File::class,
             LanguageExtension::class => Implementation\Language::class,
