@@ -7,6 +7,7 @@ use Faker\Core\Container\ContainerInterface;
 use Faker\Core\Extension\BarcodeExtension;
 use Faker\Core\Extension\BloodExtension;
 use Faker\Core\Extension\ColorExtension;
+use Faker\Core\Extension\CountryExtension;
 use Faker\Core\Extension\DateTimeExtension;
 use Faker\Core\Extension\Extension;
 use Faker\Core\Extension\ExtensionNotFound;
@@ -24,6 +25,7 @@ use Faker\Core\Strategy\StrategyInterface;
  * @mixin BarcodeExtension
  * @mixin BloodExtension
  * @mixin ColorExtension
+ * @mixin CountryExtension
  * @mixin DateTimeExtension
  * @mixin FileExtension
  * @mixin NumberExtension
@@ -197,7 +199,7 @@ class DefaultGenerator
 
     public function __call(string $name, array $arguments)
     {
-        return $this->strategy->generate($name, fn() => $this->format($name, $arguments));
+        return $this->strategy->generate($name, fn () => $this->format($name, $arguments));
     }
 
     public function __destruct()
