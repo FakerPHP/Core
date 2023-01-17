@@ -7,11 +7,6 @@ use Faker\Core\Extension\GeneratorAwareExtension;
 use Faker\Core\Extension\GeneratorAwareExtensionTrait;
 use Faker\Core\Extension\Helper;
 
-/**
- * @experimental
- *
- * @since 1.20.0
- */
 final class DateTime implements DateTimeExtension, GeneratorAwareExtension
 {
     use GeneratorAwareExtensionTrait;
