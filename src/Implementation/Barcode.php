@@ -9,9 +9,6 @@ use Faker\Core\Extension\Helper;
 use Faker\Core\Implementation\Calculator;
 use Faker\Core\Implementation\Calculator\Ean;
 
-/**
- * @experimental This class is experimental and does not fall under our BC promise
- */
 final class Barcode implements BarcodeExtension
 {
     private function ean(int $length = 13): string

@@ -6,7 +6,7 @@ namespace Faker\Core\Implementation;
 
 use Faker\Core\Extension\Extension;
 
-class Coordinates implements Extension
+final class Coordinates implements Extension
 {
     /**
      * @example '77.147489'

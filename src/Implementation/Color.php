@@ -7,9 +7,6 @@ namespace Faker\Core\Implementation;
 use Faker\Core\Extension\ColorExtension;
 use Faker\Core\Extension\Helper;
 
-/**
- * @experimental This class is experimental and does not fall under our BC promise
- */
 final class Color implements ColorExtension
 {
     /**

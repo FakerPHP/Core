@@ -6,9 +6,6 @@ namespace Faker\Core\Implementation;
 
 use Faker\Core\Extension\NumberExtension;
 
-/**
- * @experimental This class is experimental and does not fall under our BC promise
- */
 final class Number implements NumberExtension
 {
     public function numberBetween(int $min = 0, int $max = 2147483647): int
