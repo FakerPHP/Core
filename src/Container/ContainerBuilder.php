@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Faker\Core\Container;
 
 use Faker\Core\Extension\Extension;
+use Faker\Core\Extension\InternetExtension;
 use Faker\Core\Extension\LanguageExtension;
 use Faker\Core\Extension\LoremExtension;
 use Faker\Core\Implementation;
@@ -70,6 +71,7 @@ final class ContainerBuilder
             ColorExtension::class => Implementation\Color::class,
             DateTimeExtension::class => Implementation\DateTime::class,
             FileExtension::class => Implementation\File::class,
+            InternetExtension::class => Implementation\Internet::class,
             LoremExtension::class => Implementation\Lorem::class,
             LanguageExtension::class => Implementation\Language::class,
             NumberExtension::class => Implementation\Number::class,
