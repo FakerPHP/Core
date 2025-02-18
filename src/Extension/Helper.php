@@ -30,13 +30,13 @@ final class Helper
      */
     public static function boolean(int $chanceOfGettingTrue = 50): bool
     {
-        return self::numberBetween(1, 100) <= $chanceOfGettingTrue;
+        return self::randomNumberBetween(1, 100) <= $chanceOfGettingTrue;
     }
 
     /**
      * Returns a random number between start and end
      */
-    public static function numberBetween(int $start = 0, int $end = 2147483647): int
+    public static function randomNumberBetween(int $start = 0, int $end = 2147483647): int
     {
         $min = min($start, $end);
         $max = max($start, $end);

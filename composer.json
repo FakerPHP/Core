@@ -27,11 +27,8 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "psr/container": "^2.0"
-  },
-  "require-dev": {
-    "bamarni/composer-bin-plugin": "^1.6"
   },
   "autoload": {
     "psr-4": {
@@ -39,9 +36,6 @@
     }
   },
   "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "bamarni/composer-bin-plugin": true
-    }
+    "sort-packages": true
   }
 }

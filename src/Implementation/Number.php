@@ -32,11 +32,6 @@ final class Number implements NumberExtension
         return $result;
     }
 
-    public function randomDigitNotZero(): int
-    {
-        return mt_rand(1, 9);
-    }
-
     public function randomFloat(?int $nbMaxDecimals = null, float $min = 0, ?float $max = null): float
     {
         if (null === $nbMaxDecimals) {
