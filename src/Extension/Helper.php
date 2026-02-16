@@ -16,11 +16,14 @@ final class Helper
      */
     public static function randomElement(array $array): mixed
     {
-        if ($array === []) {
-            return null;
+        if (empty($array)) {
+            throw new \InvalidArgumentException('Array cannot be empty');
         }
 
-        return $array[array_rand($array, 1)];
+        $keys = array_keys($array);
+        $randomIndex = mt_rand(0, count($keys) - 1);
+
+        return $array[$keys[$randomIndex]];
     }
 
     /**
@@ -41,7 +44,7 @@ final class Helper
         $min = min($start, $end);
         $max = max($start, $end);
 
-        return random_int($min, $max);
+        return mt_rand($min, $max);
     }
 
     /**

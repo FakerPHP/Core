@@ -26,7 +26,7 @@ use Faker\Core\Strategy\StrategyInterface;
  * @mixin BarcodeExtension
  * @mixin BloodExtension
  * @mixin ColorExtension
- * @mixin CountryExtension
+ * @mixin CountryIsoExtension
  * @mixin DateTimeExtension
  * @mixin FileExtension
  * @mixin NumberExtension
@@ -147,11 +147,11 @@ class DefaultGenerator
         if ($seed === null) {
             mt_srand();
         } else {
-            mt_srand((int)$seed, MT_RAND_PHP);
+            mt_srand((int)$seed);
         }
     }
 
-    public function format($format, $arguments = [])
+    public function format($format, $arguments = []): mixed
     {
         return call_user_func_array($this->getFormatter($format), $arguments);
     }

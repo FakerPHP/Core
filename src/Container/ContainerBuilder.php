@@ -69,7 +69,7 @@ final class ContainerBuilder
             BarcodeExtension::class => Implementation\Barcode::class,
             BloodExtension::class => Implementation\Blood::class,
             ColorExtension::class => Implementation\Color::class,
-            CountryExtension::class => Implementation\Country::class,
+            CountryIsoExtension::class => Implementation\CountryIso::class,
             DateTimeExtension::class => Implementation\DateTime::class,
             FileExtension::class => Implementation\File::class,
             LoremExtension::class => Implementation\Lorem::class,

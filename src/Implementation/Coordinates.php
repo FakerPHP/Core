@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Faker\Core\Implementation;
 
+use Faker\Core\Extension\CoordinatesExtension;
 use Faker\Core\Extension\Extension;
 
-final class Coordinates implements Extension
+final class Coordinates implements CoordinatesExtension
 {
     /**
      * @example '77.147489'
