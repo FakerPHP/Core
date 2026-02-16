@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Faker\Core\Container;
 
+use Faker\Core\Extension\CountryIsoExtension;
 use Faker\Core\Extension\Extension;
 use Faker\Core\Extension\LanguageExtension;
 use Faker\Core\Extension\LoremExtension;
+use Faker\Core\Extension\MiscellaneousExtension;
+use Faker\Core\Extension\PaymentExtension;
 use Faker\Core\Implementation;
 use Faker\Core\Extension\BarcodeExtension;
 use Faker\Core\Extension\BloodExtension;
@@ -74,7 +77,9 @@ final class ContainerBuilder
             FileExtension::class => Implementation\File::class,
             LoremExtension::class => Implementation\Lorem::class,
             LanguageExtension::class => Implementation\Language::class,
+            MiscellaneousExtension::class => Implementation\Miscellaneous::class,
             NumberExtension::class => Implementation\Number::class,
+            PaymentExtension::class => Implementation\Payment::class,
             VersionExtension::class => Implementation\Version::class,
         ];
     }
